@@ -113,9 +113,7 @@ Vue.createApp({
         { id: 2, category: '麵飯', emoji: '🍝', name: '乾麵',    price: 55  },
         { id: 3, category: '麵飯', emoji: '🍲', name: '牛肉麵',  price: 130 },
         { id: 4, category: '小菜', emoji: '🥚', name: '滷蛋',    price: 20  },
-        { id: 5, category: '小菜', emoji: '🥬', name: '燙青菜',  price: 30  },
-        { id: 6, category: '湯品', emoji: '🍥', name: '貢丸湯',  price: 35  },
-        { id: 7, category: '飲料', emoji: '🧋', name: '紅茶',    price: 25  },
+        
       ]
     }
   },
@@ -140,22 +138,6 @@ Vue.createApp({
   },
 
   methods: {
-    // 加入購物車（已存在則數量+1）
-    addToCart(menuItem) {
-      const existing = this.cart.find(c => c.id === menuItem.id)
-      if (existing) {
-        existing.qty++
-      } else {
-        this.cart.push({ ...menuItem, qty: 1 })
-      }
-    },
-
-    // 送出訂單
-    placeOrder() {
-      alert('訂單已送出！合計 $' + this.totalAmount)
-      this.cart = []   // 清空購物車
-      
-    },
     async loadMenu() {
     try {
       const res  = await fetch(this.apiUrl + '?action=getMenu')
@@ -194,7 +176,25 @@ Vue.createApp({
 mounted() {
   this.loadMenu()
 }
-  }
+    // 加入購物車（已存在則數量+1）
+    ,addToCart(menuItem) {
+      const existing = this.cart.find(c => c.id === menuItem.id)
+      if (existing) {
+        existing.qty++
+      } else {
+        this.cart.push({ ...menuItem, qty: 1 })
+      }
+    },
+
+    // 送出訂單
+    placeOrder() {
+      alert('訂單已送出！合計 $' + this.totalAmount)
+      this.cart = []   // 清空購物車
+      
+    },
+   
+}
+  
 
 ).mount('#app')
 </script>
